@@ -7,10 +7,10 @@
 
 import UIKit
 
-enum UIHelper {
+public enum UIHelper {
     
     /// Zeplin Line Height 값을 Line Spacing으로 변환합니다.
-    static func lineSpacing(from lineHeight: CGFloat, font: UIFont) -> CGFloat {
+    public static func lineSpacing(from lineHeight: CGFloat, font: UIFont) -> CGFloat {
         let value = lineHeight - font.lineHeight
         return value
     }

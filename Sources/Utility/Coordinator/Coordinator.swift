@@ -23,7 +23,7 @@ public protocol CoordinatorProtocol: AnyObject {
     init(source: UIViewController)
     
     func source(_ viewController: UIViewController?) -> Self
-
+    
     func destination(_ viewController: UIViewController?) -> Self
     func destination(_ destinationWrapper: DestinationWrapper) -> Self
     func destination(options: ModalOption...) -> Self
@@ -32,6 +32,7 @@ public protocol CoordinatorProtocol: AnyObject {
     func push(animated: Bool)
     func pop(to: DestinationWrapper, animated: Bool)
     func pop(to: UIViewController.Type, animated: Bool)
+    func popToRoot(animated: Bool)
 }
 
 public extension CoordinatorProtocol {
@@ -44,7 +45,7 @@ public extension CoordinatorProtocol {
         source = viewController
         return self
     }
-
+    
 }
 
 public extension CoordinatorProtocol {
@@ -58,7 +59,7 @@ public extension CoordinatorProtocol {
         destination = viewController
         return self
     }
-
+    
     func destination(options: ModalOption...) -> Self {
         options.forEach { $0.apply(in: &destination) }
         return self
@@ -77,19 +78,23 @@ public extension CoordinatorProtocol {
         guard let destination = destination else { return }
         sourceNavigationController?.pushViewController(destination, animated: animated)
     }
-        
+    
     func pop(to: DestinationWrapper, animated: Bool = true) {
         guard let viewControllers = sourceNavigationController?.viewControllers,
-            let destination = viewControllers.first(where: { type(of: $0) == type(of: to.destination) }) else { return }
-                
+              let destination = viewControllers.first(where: { type(of: $0) == type(of: to.destination) }) else { return }
+        
         sourceNavigationController?.popToViewController(destination, animated: animated)
     }
     
     func pop(to: UIViewController.Type, animated: Bool = true) {
         guard let viewControllers = sourceNavigationController?.viewControllers,
-            let destination = viewControllers.first(where: { type(of: $0) == to }) else { return }
+              let destination = viewControllers.first(where: { type(of: $0) == to }) else { return }
         
         sourceNavigationController?.popToViewController(destination, animated: animated)
+    }
+    
+    func popToRoot(animated: Bool) {
+        sourceNavigationController?.popToRootViewController(animated: animated)
     }
     
 }

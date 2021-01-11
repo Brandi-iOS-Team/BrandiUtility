@@ -48,7 +48,7 @@ public extension UIView {
         }
     }
     
-    func anchorSize(to view: UIView) {
+    func anchor(sizeTo view: UIView) {
         widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
@@ -67,6 +67,16 @@ public extension UIView {
     
     func anchorFillToSuperView(padding: UIEdgeInsets = .zero) {
         anchor(top: superview?.topAnchor, leading: superview?.leadingAnchor, bottom: superview?.bottomAnchor, trailing: superview?.trailingAnchor, padding: padding)
+    }
+    
+    func centerXTo(_ anchor: NSLayoutXAxisAnchor) {
+        translatesAutoresizingMaskIntoConstraints = false
+        centerXAnchor.constraint(equalTo: anchor).isActive = true
+    }
+    
+    func centerYTo(_ anchor: NSLayoutYAxisAnchor) {
+        translatesAutoresizingMaskIntoConstraints = false
+        centerYAnchor.constraint(equalTo: anchor).isActive = true
     }
     
     func hideAndDisable(disable: Bool) {
@@ -160,10 +170,13 @@ public extension UIView {
     }
     
     func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        layer.mask = mask
+        self.layer.cornerRadius = radius
+        var cornerMask = CACornerMask()
+        if corners.contains(.topLeft) { cornerMask.insert(.layerMinXMinYCorner) }
+        if corners.contains(.topRight) { cornerMask.insert(.layerMaxXMinYCorner) }
+        if corners.contains(.bottomLeft) { cornerMask.insert(.layerMinXMaxYCorner) }
+        if corners.contains(.bottomRight) { cornerMask.insert(.layerMaxXMaxYCorner) }
+        self.layer.maskedCorners = cornerMask
     }
     
     func removeAllConstraints() {
@@ -199,6 +212,10 @@ public extension UIView {
             return firstItemMatch || secondItemMatch
         }
         return false
+    }
+    
+    func addSubviews(_ views: UIView...) {
+        for view in views { addSubview(view) }
     }
 }
 

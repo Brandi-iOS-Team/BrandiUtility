@@ -18,6 +18,16 @@ public extension UIButton {
         self.setBackgroundColor(color: bgColor, forState: .normal)
     }
     
+    convenience init(title: String, font: UIFont, titleColor: UIColor = .black, bgColor: UIColor, image: UIImage? = nil) {
+        self.init(frame: .zero)
+        
+        setTitle(title, for: .normal)
+        titleLabel?.font = font
+        setTitleColor(titleColor, for: .normal)
+        setBackgroundColor(color: bgColor, forState: .normal)
+        setImage(image, for: .normal)
+    }
+    
     func setBackgroundColor(color: UIColor, forState: UIControl.State) {
         self.clipsToBounds = true  // add this to maintain corner radius
         UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))

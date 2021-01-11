@@ -88,6 +88,17 @@ open class AttStrBuilder {
         return self
     }
     
+    open func strikethrough() -> AttStrBuilder {
+        attrString.addAttributes([.strikethroughStyle: 1], range: NSRange(location: 0, length: attrString.string.count))
+        return self
+    }
+    
+    @discardableResult
+    open func strikethroughColor(_ color: UIColor) -> AttStrBuilder {
+        attrString.addAttributes([.strikethroughColor: color], range: NSRange(location: 0, length: attrString.string.count))
+        return self
+    }
+    
     open func paraStyle(_ paraStyle: NSMutableParagraphStyle) -> AttStrBuilder {
         attrString.addAttributes([.paragraphStyle: paraStyle], range: NSRange(location: 0, length: attrString.string.count))
         return self

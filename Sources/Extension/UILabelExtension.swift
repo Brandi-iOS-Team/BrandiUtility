@@ -11,10 +11,11 @@ import Foundation
 import UIKit
 
 public extension UILabel {
-    convenience init(text: String, font: UIFont, numberOfLines: Int = 1) {
+    convenience init(text: String, font: UIFont, color: UIColor = .black, numberOfLines: Int = 1) {
         self.init(frame: .zero)
         self.text = text
         self.font = font
+        self.textColor = color
         self.numberOfLines = numberOfLines
     }
     
@@ -69,10 +70,10 @@ public extension UILabel {
 }
 
 @IBDesignable open class PaddingLabel: UILabel {
-    @IBInspectable var topInset: CGFloat = 0
-    @IBInspectable var bottomInset: CGFloat = 0
-    @IBInspectable var leftInset: CGFloat = 0
-    @IBInspectable var rightInset: CGFloat = 0
+    @IBInspectable public var topInset: CGFloat = 0
+    @IBInspectable public var bottomInset: CGFloat = 0
+    @IBInspectable public var leftInset: CGFloat = 0
+    @IBInspectable public var rightInset: CGFloat = 0
     
     open override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets.init(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
@@ -83,6 +84,13 @@ public extension UILabel {
         let size = super.intrinsicContentSize
         return CGSize(width: size.width + leftInset + rightInset,
                       height: size.height + topInset + bottomInset)
+    }
+    
+    open func setInsets(top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) {
+        self.topInset = top
+        self.leftInset = left
+        self.bottomInset = bottom
+        self.rightInset = right
     }
 }
 #endif

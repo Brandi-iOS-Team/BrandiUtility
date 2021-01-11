@@ -158,4 +158,32 @@ public extension String {
         let trim = self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         return trim
     }
+    
+    var withoutSpecialCharacters: String {
+        return self.components(separatedBy: CharacterSet.symbols).joined(separator: "")
+    }
+    
+    func toCallNumberparsed() -> (numHead: String, numBody: String, numTail: String)? {
+        let distString = self.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let startIndex = distString.startIndex
+        var head: Substring = ""
+        var body: Substring = ""
+        var tail: Substring = ""
+        
+        head = distString[..<distString.index(startIndex, offsetBy: distString.count > 3 ? 3 : distString.count)]
+        if distString.count > 3 {
+            if distString.count < 11 {
+                body = distString[distString.index(startIndex, offsetBy: 3)..<distString.index(startIndex, offsetBy: distString.count > 6 ? 6 : distString.count)]
+                if distString.count > 6 {
+                    tail = distString[distString.index(startIndex, offsetBy: 6)...]
+                }
+            } else if distString.count < 12 {
+                body = distString[distString.index(startIndex, offsetBy: 3)..<distString.index(startIndex, offsetBy: distString.count > 7 ? 7 : distString.count)]
+                if distString.count > 7 {
+                    tail = distString[distString.index(startIndex, offsetBy: 7)...]
+                }
+            }
+        }
+        return (numHead: String(head), numBody: String(body), numTail: String(tail))
+    }
 }

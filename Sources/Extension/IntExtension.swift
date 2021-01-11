@@ -20,6 +20,18 @@ public extension Int {
         return "\(self)"
     }
     
+    func toStringDividedAlphabetUnit() -> String {
+        var countString = "\(self)"
+        if self > 999_999 {
+            let count: CGFloat = CGFloat(self) / 1_000_000
+            countString = String(format: "%.1f", count) + "m"
+        } else if self > 999 {
+            let count: CGFloat = CGFloat(self) / 1_000
+            countString = String(format: "%.1f", count) + "k"
+        }
+        return countString
+    }
+    
     /*
      Why not use "\(someVar)"? This returns optional.
      Swift will add the word 'optional' to the output.

@@ -186,4 +186,9 @@ public extension String {
         }
         return (numHead: String(head), numBody: String(body), numTail: String(tail))
     }
+    
+    func validateRegex(with regex: String) -> Bool {
+        let regex = NSRegularExpression(regex)
+        return regex.matches(self)
+    }
 }

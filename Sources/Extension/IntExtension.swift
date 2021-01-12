@@ -55,4 +55,15 @@ public extension Int {
         return CGFloat(self)
     }
     
+    func toTimeStartMinutes() -> String {
+        var leftedMinutes: String = String(self / 60)
+        var leftedSeconds: String = String(self % 60)
+        if leftedMinutes.count == 1 {
+            leftedMinutes.insert("0", at: leftedMinutes.startIndex)
+        }
+        if leftedSeconds.count == 1 {
+            leftedSeconds.insert("0", at: leftedSeconds.startIndex)
+        }
+        return leftedMinutes.appending(":").appending(leftedSeconds)
+    }
 }

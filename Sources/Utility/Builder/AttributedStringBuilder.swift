@@ -133,6 +133,11 @@ open class ParaStyleBuilder {
         return self
     }
     
+    open func lineBreak(_ lineBreak: NSLineBreakMode) -> ParaStyleBuilder {
+        paraStyle.lineBreakMode = lineBreak
+        return self
+    }
+    
     open func build() -> NSMutableParagraphStyle {
         return paraStyle
     }

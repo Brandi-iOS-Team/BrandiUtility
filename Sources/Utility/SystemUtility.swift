@@ -6,7 +6,7 @@
 //  Copyright © 2016년 Brandi. All rights reserved.
 //
 
-#if !os(watchOS)
+#if !os(watchOS) && !os(tvOS)
 import Foundation
 import WebKit
 

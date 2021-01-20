@@ -33,6 +33,8 @@ public protocol CoordinatorProtocol: AnyObject {
     func pop(to: DestinationWrapper, animated: Bool)
     func pop(to: UIViewController.Type, animated: Bool)
     func popToRoot(animated: Bool)
+    
+    func removeViewController(_ controller: UIViewController.Type)
 }
 
 public extension CoordinatorProtocol {
@@ -95,6 +97,20 @@ public extension CoordinatorProtocol {
     
     func popToRoot(animated: Bool) {
         sourceNavigationController?.popToRootViewController(animated: animated)
+    }
+    
+}
+
+public extension CoordinatorProtocol {
+    
+    /// Removes specific view controller in navigationController's viewControllers stack
+    /// It uses setViewControllers(_:animated:), to update the current view controller stack without pushing or popping each controller explicitly
+    /// - Parameter controller: specific view controller to remove
+    func removeViewController(_ controller: UIViewController.Type) {
+        var array = sourceNavigationController?.viewControllers
+        array?.removeAll(where: { $0.isKind(of: controller.self)} )
+        guard let viewControllers = array else { return }
+        sourceNavigationController?.setViewControllers(viewControllers, animated: true)
     }
     
 }

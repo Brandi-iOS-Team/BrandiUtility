@@ -34,7 +34,7 @@ public protocol CoordinatorProtocol: AnyObject {
     func pop(to: UIViewController.Type, animated: Bool)
     func popToRoot(animated: Bool)
     
-    func removeViewController(_ controller: UIViewController.Type)
+    func removeViewControllers(_ controller: UIViewController.Type, animated: Bool)
 }
 
 public extension CoordinatorProtocol {

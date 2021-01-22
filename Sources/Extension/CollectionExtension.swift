@@ -16,3 +16,19 @@ public extension Collection {
         !isEmpty
     }
 }
+
+public extension MutableCollection {
+    // Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript(safe index: Index) -> Element? {
+        set {
+            if let newValue = newValue, indices.contains(index) {
+                self[index] = newValue
+            }
+        }
+
+        get {
+            return indices.contains(index) ? self[index] : nil
+        }
+
+    }
+}

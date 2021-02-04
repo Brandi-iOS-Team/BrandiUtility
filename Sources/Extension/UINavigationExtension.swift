@@ -9,7 +9,7 @@
 import UIKit
 
 public extension UINavigationController {
-    func popTo<T>(_ vc: T.Type) {
+    func popTo<T: UIViewController>(_ vc: T.Type) {
         let targetVC = viewControllers.first{$0 is T}
         if let targetVC = targetVC {
             popToViewController(targetVC, animated: true)

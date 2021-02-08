@@ -19,7 +19,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "Realm", url: "https://github.com/realm/realm-cocoa", from: "10.5.0"),
         .package(name: "ObjectMapper", url: "https://github.com/tristanhimmelman/ObjectMapper.git", from: "4.2.0"),
-        .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage", from: "5.10.4"),
+        .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage", from: "5.10.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

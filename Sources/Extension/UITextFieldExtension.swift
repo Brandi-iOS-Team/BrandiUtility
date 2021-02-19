@@ -45,5 +45,9 @@ public extension UITextField {
         self.layer.masksToBounds = true
         self.clipsToBounds = true
     }
+    
+    func addIndentOfDefault() {
+        self.addIndentIntoLeft(10.0)    // 추가 후, 프로젝트 코드 정리한 후에 삭제할 예정
+    }
 }
 #endif

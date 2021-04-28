@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "Realm", url: "https://github.com/realm/realm-cocoa", from: "10.5.0"),
+        .package(name: "Realm", url: "https://github.com/realm/realm-cocoa", from: "10.7.4"),
         .package(name: "ObjectMapper", url: "https://github.com/tristanhimmelman/ObjectMapper.git", from: "4.2.0"),
     ],
     targets: [

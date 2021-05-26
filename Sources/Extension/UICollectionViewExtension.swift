@@ -11,6 +11,14 @@ import Foundation
 import UIKit
 
 public extension UICollectionView {
+    
+    var fullyVisibleCells: [UICollectionViewCell] {
+        visibleCells
+            .filter {
+                bounds.contains($0.frame)
+            }
+    }
+    
     func refreshData() {
         self.reloadData()
         var hasData = false

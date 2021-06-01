@@ -13,11 +13,35 @@ import UIKit
 public extension UICollectionView {
     
     var fullyVisibleCells: [UICollectionViewCell] {
-        visibleCells
-            .filter {
-                bounds.contains($0.frame)
-            }
+        visibleCells.filter { bounds.contains($0.frame) }
     }
+    
+    var fullyVisibleCellIndexPaths: [IndexPath] {
+        fullyVisibleCells
+            .compactMap { indexPath(for: $0) }
+    }
+
+    func fullyVisibleReusableViews(ofKind elementKind: String) -> [UICollectionReusableView] {
+        visibleSupplementaryViews(ofKind: elementKind)
+            .filter { bounds.contains($0.frame) }
+    }
+    
+    func fullyVisibleReusableIndexPaths(ofKind elementKind: String) -> [IndexPath] {
+        fullyVisibleReusableViews(ofKind: elementKind)
+            .compactMap { indexPathForVisibleSupplementaryView(for:$0, ofKind: elementKind) }
+    }
+    
+    func indexPathForVisibleSupplementaryView(for view: UICollectionReusableView, ofKind elementKind: String) -> IndexPath? {
+        let indexPaths = indexPathsForVisibleSupplementaryElements(ofKind: elementKind)
+        let views = visibleSupplementaryViews(ofKind: elementKind)
+        let items: [(indexPath: IndexPath, reusableView: UICollectionReusableView)] = Array(zip(indexPaths, views))
+        
+        return items.first { $0.reusableView == view }?.indexPath
+    }
+
+}
+
+public extension UICollectionView {
     
     func refreshData() {
         self.reloadData()

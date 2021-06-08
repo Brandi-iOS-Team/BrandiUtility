@@ -12,8 +12,26 @@ import UIKit
 
 public extension UICollectionView {
     
+    private func findSuperVC(_ responder: UIResponder) -> UIViewController? {
+        guard let next = responder.next else { return nil }
+        
+        guard let vc = next as? UIViewController else {
+            return findSuperVC(next)
+        }
+        
+        return vc
+    }
+
     var fullyVisibleCells: [UICollectionViewCell] {
-        visibleCells.filter { bounds.contains($0.frame) }
+        let superVC = findSuperVC(self)
+        return visibleCells.filter {
+            guard let superview = superVC?.view else {
+                return bounds.contains($0.frame)
+            }
+            
+            let cellRect = convert($0.frame, to: superview)
+            return superview.bounds.contains(cellRect)
+        }
     }
     
     var fullyVisibleCellIndexPaths: [IndexPath] {
@@ -22,8 +40,16 @@ public extension UICollectionView {
     }
 
     func fullyVisibleReusableViews(ofKind elementKind: String) -> [UICollectionReusableView] {
-        visibleSupplementaryViews(ofKind: elementKind)
-            .filter { bounds.contains($0.frame) }
+        let superVC = findSuperVC(self)
+        return visibleSupplementaryViews(ofKind: elementKind)
+            .filter {
+                guard let superview = superVC?.view else {
+                    return bounds.contains($0.frame)
+                }
+                
+                let viewRect = convert($0.frame, to: superview)
+                return superview.bounds.contains(viewRect)
+            }
     }
     
     func fullyVisibleReusableIndexPaths(ofKind elementKind: String) -> [IndexPath] {
